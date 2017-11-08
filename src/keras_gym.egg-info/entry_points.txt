@@ -1,3 +1,0 @@
-[console_scripts]
-keras-gym = kerasgym:main
-

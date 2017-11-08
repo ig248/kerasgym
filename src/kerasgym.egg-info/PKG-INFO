@@ -2,7 +2,7 @@ Metadata-Version: 1.0
 Name: kerasgym
 Version: 0.1
 Summary: Train keras models productively
-Home-page: https://github.com/ig248/keras-gym
+Home-page: https://github.com/ig248/kerasgym
 Author: Igor Gotlibovych
 Author-email: igor.gotlibovych@gmail.com
 License: MIT

@@ -45,29 +45,29 @@ Building your own models
 ------------------------
 `kerasgym` currently looks for a file `path/model.py` defining a `keras` model with the following structure:
 
-.. code-block:: python
-    from kerasgym import GymModel
+```python
+from kerasgym import GymModel
 
-    class Model(GymModel):
+class Model(GymModel):
 
-        def model(self):
-            """Return a ready-to-use compiled keras model"""
-            model = Sequential()
-            ...
-            optimizer = Adam(lr=0.0001)
-            model.compile(loss='categorical_crossentropy',
-                          optimizer=optimizer,
-                          metrics=['accuracy'])
+    def model(self):
+        """Return a ready-to-use compiled keras model"""
+        model = Sequential()
+        ...
+        optimizer = Adam(lr=0.0001)
+        model.compile(loss='categorical_crossentropy',
+                      optimizer=optimizer,
+                      metrics=['accuracy'])
 
-            return model
+        return model
 
-        def train(self, model, epochs, initial_epoch):
-            """Perform specified number of epochs, and return history object"""
-            history = model.fit(epochs=epochs + initial_epoch,
-                                initial_epoch=initial_epoch,
-                                ...)
-            return history
-
+    def train(self, model, epochs, initial_epoch):
+        """Perform specified number of epochs, and return history object"""
+        history = model.fit(epochs=epochs + initial_epoch,
+                            initial_epoch=initial_epoch,
+                            ...)
+        return history
+```
 
 It is expected to contain a class `Model`, inheriting from `kerasgym.GymModel`, and must implement the static methods `model` and `train`. See `examples` for a sample implementation.
 

@@ -1,0 +1,12 @@
+MANIFEST.in
+NEWS.txt
+README.rst
+src/kerasgym/__init__.py
+src/kerasgym/app.py
+src/kerasgym/model.py
+src/kerasgym.egg-info/PKG-INFO
+src/kerasgym.egg-info/SOURCES.txt
+src/kerasgym.egg-info/dependency_links.txt
+src/kerasgym.egg-info/entry_points.txt
+src/kerasgym.egg-info/not-zip-safe
+src/kerasgym.egg-info/top_level.txt

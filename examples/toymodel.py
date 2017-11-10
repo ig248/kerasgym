@@ -10,8 +10,8 @@ import numpy as np
 class Model(GymModel):
 
     def model(self):
-        """2-8-8-1 fully connected model:
-        two inputs, two hidden layers and one sigmoid output"""
+        """2-3-1 fully connected model:
+        two inputs, one hidden layer and one sigmoid output"""
         model = Sequential()
         model.add(Dense(3, activation='relu', input_shape=(2,)))
         model.add(Dense(1, activation='tanh'))

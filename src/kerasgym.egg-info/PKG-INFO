@@ -6,29 +6,99 @@ Home-page: https://github.com/ig248/kerasgym
 Author: Igor Gotlibovych
 Author-email: igor.gotlibovych@gmail.com
 License: MIT
-Description: This file requires editing
-        ==========================
+Description: KerasGym
+        ========
         
-        Note to the author: Please add something informative to this README *before*
-        releasing your software, as `a little documentation goes a long way`_.  Both
-        README.rst (this file) and NEWS.txt (release notes) will be included in your
-        package metadata which gets displayed in the PyPI page for your project.
+        This package was written to simplify the task of keeping track of
+        ``keras`` deep learning models while working on a real-world problem. I
+        found that being able to re-visit previous experiments, especially for
+        comparing training curves and using saved models for prediction, was
+        rather useful.
         
-        You can take a look at the README.txt of other projects, such as repoze.bfg
-        (http://bfg.repoze.org/trac/browser/trunk/README.txt) for some ideas.
+        This gym is under construction.
         
-        .. _`a little documentation goes a long way`: http://www.martinaspeli.net/articles/a-little-documentation-goes-a-long-way
+        Quick start
+        -----------
+        
+        Requires ``keras``.
+        
+        Installation:
+        
+        ::
+        
+            $ git clone https://github.com/ig248/kerasgym
+            $ cd kerasgym
+        
+        List command-line options:
+        
+        ::
+        
+            $ kerasgym --help
+        
+        Run 10 epochs:
+        
+        ::
+        
+            $ kerasgym --verbose --path examples --model toymodel --epochs 10
+        
+        Continue training from last save point:
+        
+        ::
+        
+            $ kerasgym --verbose --path examples --model toymodel --continue --epochs 10
+        
+        Saved files
+        -----------
+        
+        Two files are saved for each model: - ``toymodel.h5``: a complete state
+        of the ``keras`` model, including weights, for future use -
+        ``toymodelhistory.json``: a plain-text json file containing combined
+        history of all metrics over training epochs
+        
+        See https://keras.io/getting-started/faq/#how-can-i-save-a-keras-model
+        and https://keras.io/callbacks/#history for further information.
+        
+        Building your own models
+        ------------------------
+        
+        ``kerasgym`` currently looks for a file ``path/model.py`` defining a
+        ``keras`` model with the following structure:
+        
+        .. code:: python
+        
+            from kerasgym import GymModel
+        
+            class Model(GymModel):
+        
+                def model(self):
+                    """Return a ready-to-use compiled keras model"""
+                    model = Sequential()
+                    ...
+                    optimizer = Adam(lr=0.0001)
+                    model.compile(loss='categorical_crossentropy',
+                                  optimizer=optimizer,
+                                  metrics=['accuracy'])
+        
+                    return model
+        
+                def train(self, model, epochs, initial_epoch):
+                    """Perform specified number of epochs, and return history object"""
+                    history = model.fit(epochs=epochs + initial_epoch,
+                                        initial_epoch=initial_epoch,
+                                        ...)
+                    return history
+        
+        It is expected to contain a class ``Model``, inheriting from
+        ``kerasgym.GymModel``, and must implement the static methods ``model``
+        and ``train``. See ``examples`` for a sample implementation.
         
         Credits
         -------
         
-        - `Distribute`_
-        - `Buildout`_
-        - `modern-package-template`_
-        
-        .. _Buildout: http://www.buildout.org/
-        .. _Distribute: http://pypi.python.org/pypi/distribute
-        .. _`modern-package-template`: http://pypi.python.org/pypi/modern-package-template
+        -  ```keras`` <https://keras.io/>`__
+        -  ```Distribute`` <http://pypi.python.org/pypi/distribute>`__
+        -  ```Buildout`` <http://www.buildout.org/>`__
+        -  ```modern-package-template`` <http://pypi.python.org/pypi/modern-package-template>`__
         
         
         .. This is your project NEWS file which will contain the release notes.

@@ -16,8 +16,13 @@ def pars_args():
     parser.add_argument(
         "-p",
         "--path",
-        help="path to model definitions",
+        help="path to model definitions and checkpoints",
         metavar="path")
+    parser.add_argument(
+        "-o",
+        "--out",
+        help="path to save output history and checkpoints",
+        metavar="out")
     parser.add_argument(
         "-m",
         "--model",
@@ -70,11 +75,17 @@ def main():
         sys.path.append(args.path)
     else:
         args.path = ''
+    if not args.out:
+        args.out = args.path
+
     module = importlib.import_module(args.model)
     gymmodel = module.Model()
 
     model_file = os.path.join(args.path, args.model + '.h5')
     history_file = os.path.join(args.path, args.model + 'history.json')
+
+    model_file_out = os.path.join(args.out, args.model + '.h5')
+    history_file_out = os.path.join(args.out, args.model + 'history.json')
 
     # load saved model, or prepare to overwrite
     overwrite_warning = False
@@ -112,10 +123,10 @@ def main():
 
     # train and save updated model
     gymmodel.train_update(epochs=args.epochs)
-    gymmodel.save_model(model_file)
-    log.info('Saved model to %s ...', model_file)
-    gymmodel.save_history(history_file)
-    log.info('Saved history to %s ...', history_file)
+    gymmodel.save_model(model_file_out)
+    log.info('Saved model to %s ...', model_file_out)
+    gymmodel.save_history(history_file_out)
+    log.info('Saved history to %s ...', history_file_out)
 
 if __name__ == "__main__":
     main()

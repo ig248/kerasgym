@@ -15,6 +15,13 @@ def history_join(old_history, new_history):
     return history
 
 
+def history_clean(history):
+    """Convert history to native python types (for json serialization)"""
+    for key in history:
+        history[key] = [float(val) for val in history[key]]
+    return history
+
+
 class GymModel:
     """Base class for building persistent kerasgym models"""
     __metaclass__ = ABCMeta
@@ -65,6 +72,7 @@ class GymModel:
         k_history = self.train(self._model, epochs=epochs, initial_epoch=self._epoch)
         new_history = k_history.history  # train returns a keras History object
         self._history = history_join(self._history, new_history)
+        self._history = history_clean(self._history)
 
     # These functions must be implemented:
 

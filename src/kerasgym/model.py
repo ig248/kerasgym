@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from keras.models import load_model
-import simplejson as json
+import json
 
 
 def history_join(old_history, new_history):

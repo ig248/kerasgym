@@ -68,6 +68,7 @@ def main():
         loglevel = log.WARN
     if args.debug:
         loglevel = log.DEBUG
+        args.verbose = True
     log.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     log.debug("Args: %s", args)
     # import model
